@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Block Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center my-5">Block Search</h1>
+      <form>
+        <div class="mb-3">
+          <label for="timestamp" class="form-label">Timestamp:</label>
+          <input type="datetime-local" id="timestamp" name="timestamp" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="network" class="form-label">Ethereum Network:</label>
+          <select id="network" name="network" class="form-select" required>
+            <option value="mainnet">Mainnet</option>
+            <option value="ropsten">Ropsten</option>
+            <option value="rinkeby">Rinkeby</option>
+            <option value="kovan">Kovan</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search Blocks</button>
+      </form>
+      <div id="search-results" class="mt-5">
+        <h2>Results:</h2>
+        <p id="time-taken"></p>
+        <ul id="results"></ul>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"></script>
+
+    <script>
+      $('form').submit(function(e) {
+        const start = Date.now();
+        e.preventDefault();
+        const datetime = $('#timestamp').val();
+        const timestamp = new Date(datetime).getTime();
+        const network = $('#network').val();
+
+        $.ajax({
+          url: '/api/blocks/search-by-timestamp',
+          type: 'POST',
+          data: JSON.stringify({ timestamp, network }),
+          contentType: 'application/json',
+          success: function(data) {
+            const timeTaken = Date.now() - start;
+            $('#time-taken').text(`Time taken: ${timeTaken / 1000} s`);
+            $('#results').empty();
+            $('#results').append(`<li>Block Number: ${data.number}, Block Hash: ${data.hash}</li>`);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

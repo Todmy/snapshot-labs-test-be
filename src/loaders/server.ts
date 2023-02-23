@@ -15,6 +15,10 @@ export default (app: express.Application) => {
 
   app.use('/api', routes);
 
+  app.get('/', (req, res) => {
+    return res.sendFile(path.join(__dirname, '../views/block-search-form.html'));
+  });
+
   app.use((req, res, next) => {
     const error: Error = new Error('Not Found');
     error.status = 404;
