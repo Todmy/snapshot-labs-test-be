@@ -1,0 +1,10 @@
+.vscode
+node_modules
+test
+.editorconfig
+.env.example
+.gitignore
+icon.png
+README.md
+build
+dist
