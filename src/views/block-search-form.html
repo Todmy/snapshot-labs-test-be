@@ -7,21 +7,16 @@
   <body>
     <div class="container">
       <h1 class="text-center my-5">Block Search</h1>
-      <form>
-        <div class="mb-3">
-          <label for="timestamp" class="form-label">Timestamp:</label>
+      <form class="row">
+        <div class="col-auto mb-3">
+          <label for="timestamp" class="col-form-label">Timestamp:</label>
+        </div> 
+        <div class="col-auto mb-3">
           <input type="datetime-local" id="timestamp" name="timestamp" class="form-control" required>
         </div>
-        <div class="mb-3">
-          <label for="network" class="form-label">Ethereum Network:</label>
-          <select id="network" name="network" class="form-select" required>
-            <option value="mainnet">Mainnet</option>
-            <option value="ropsten">Ropsten</option>
-            <option value="rinkeby">Rinkeby</option>
-            <option value="kovan">Kovan</option>
-          </select>
+        <div class="col-auto mb-3">
+          <button type="submit" class="btn btn-primary col-auto">Search Blocks</button>
         </div>
-        <button type="submit" class="btn btn-primary">Search Blocks</button>
       </form>
       <div id="search-results" class="mt-5">
         <h2>Results:</h2>
@@ -40,13 +35,12 @@
         const start = Date.now();
         e.preventDefault();
         const datetime = $('#timestamp').val();
-        const timestamp = new Date(datetime).getTime();
-        const network = $('#network').val();
+        const timestamp = new Date(datetime).getTime() / 1000;
 
         $.ajax({
           url: '/api/blocks/search-by-timestamp',
           type: 'POST',
-          data: JSON.stringify({ timestamp, network }),
+          data: JSON.stringify({ timestamp }),
           contentType: 'application/json',
           success: function(data) {
             const timeTaken = Date.now() - start;

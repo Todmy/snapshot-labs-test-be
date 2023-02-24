@@ -9,6 +9,8 @@ if (!envFound) {
 }
 
 export default {
-  port: parseInt(process.env.PORT) || 3000,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
   jwtSecret: process.env.JWT_SECRET,
+  ethRpcUrl: process.env.ETH_RPC_URL,
+  withCache: process.env.WITH_SIMPLE_CACHE === 'true',
 };
