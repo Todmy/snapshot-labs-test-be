@@ -38,4 +38,6 @@ Install [Node.js and NPM](https://nodejs.org/en/download/)
 - To generate all JavaScript files from the TypeScript sources, run `yarn build`.
 - The builded app can be found in the `dist` folder.
 
-This project was inspired by Bulletproof Node.js architecture and was modified to fit specific needs.
+### Test solution
+The server has a simple page at the root path `/`. It returns HTML where you can enter the timestamp and get the ethereum block number. Also the frontend page measure the time was taken to get the block number. Note that the app does not count the time that is spent for transferring the data from the server to the client and back.
+Also the app has a simple chache mechanism. You need to enable it in .env. The cache is stored in memory and it is not persistent. The cache is cleared every time the server is restarted.
